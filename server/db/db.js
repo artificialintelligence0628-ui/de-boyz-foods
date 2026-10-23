@@ -3,6 +3,9 @@ import { config } from '../config.js';
 
 const { Pool } = pg;
 
+// Return DATE columns as plain 'YYYY-MM-DD' strings so meal dates never shift by timezone.
+pg.types.setTypeParser(1082, (v) => v);
+
 export const pool = new Pool({
   connectionString: config.databaseUrl,
   ssl: config.databaseUrl?.includes('sslmode=require') ? { rejectUnauthorized: false } : undefined,
