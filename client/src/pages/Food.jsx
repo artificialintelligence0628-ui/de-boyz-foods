@@ -15,19 +15,19 @@ export default function Food() {
   );
 
   return (
-    <div className="mx-auto max-w-[1104px] px-4 pb-16 pt-9 sm:px-6">
+    <div className="mx-auto max-w-[1104px] px-3 pb-12 pt-6 sm:px-6 sm:pb-16 sm:pt-9">
       <span className="inline-flex items-center gap-2 rounded-full bg-chili-soft px-4 py-2 font-semibold text-chili">
         <CalendarDays className="h-4 w-4" /> {today}
       </span>
-      <h1 className="mt-6 text-4xl font-extrabold tracking-tight">Today's Menu</h1>
-      <p className="mt-1 text-lg text-black/65">Hot meals available today. Order for pickup or delivery.</p>
+      <h1 className="mt-4 text-3xl font-extrabold tracking-tight sm:mt-6 sm:text-4xl">Today's Menu</h1>
+      <p className="mt-1 text-base text-black/65 sm:text-lg">Hot meals available today. Order for pickup or delivery.</p>
 
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search today's meals..."
         aria-label="Search today's meals"
-        className="mt-7 w-full rounded-full border border-black/10 bg-white px-6 py-4 text-base outline-none placeholder:text-black/40 focus:ring-2 focus:ring-chili/30"
+        className="mt-5 w-full rounded-full border border-black/10 bg-white px-5 py-3 text-base sm:mt-7 sm:px-6 sm:py-4 outline-none placeholder:text-black/40 focus:ring-2 focus:ring-chili/30"
       />
 
       <div className="mt-6">
@@ -40,7 +40,7 @@ export default function Food() {
             <p className="mt-1 text-lg text-black/60">{q && meals.length ? 'Try a different name.' : 'Please check back later today.'}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
             {shown.map((m) => <ItemCard key={m.id} item={m} type="meal" accent="red" />)}
           </div>
         )}

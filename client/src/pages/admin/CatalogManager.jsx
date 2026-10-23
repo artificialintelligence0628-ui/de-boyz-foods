@@ -26,7 +26,7 @@ function ImageField({ value, onChange, onError }) {
   return (
     <div>
       <span className="label">Photo</span>
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         <div className="grid h-20 w-20 shrink-0 place-items-center overflow-hidden rounded-xl bg-[#F1F0EE] text-black/30">
           {value ? <img src={value} alt="" className="h-full w-full object-cover" /> : <ImagePlus className="h-7 w-7" strokeWidth={1.5} />}
         </div>
@@ -45,7 +45,7 @@ function ImageField({ value, onChange, onError }) {
 function Toggle({ checked, onChange, label }) {
   return (
     <label className="flex cursor-pointer items-center gap-2 text-sm font-medium">
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="h-4 w-4 accent-[#0B6B2E]" />
+      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="h-5 w-5 accent-[#0B6B2E]" />
       {label}
     </label>
   );
@@ -53,18 +53,21 @@ function Toggle({ checked, onChange, label }) {
 
 function Row({ item, sub, badge, onEdit, onDelete }) {
   return (
-    <li className="flex items-center gap-4 p-4">
-      <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-[#F1F0EE]">
+    <div className="flex items-start gap-3 p-3 sm:items-center sm:gap-4 sm:p-4">
+      <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-[#F1F0EE] sm:h-14 sm:w-14">
         {item.image_url && <img src={item.image_url} alt="" className="h-full w-full object-cover" />}
       </div>
       <div className="min-w-0 flex-1">
-        <p className="truncate font-semibold">{item.name} {badge}</p>
+        <p className="break-words font-semibold leading-snug sm:truncate">{item.name} {badge}</p>
         <p className="truncate text-sm text-black/55">{sub}</p>
+        <p className="mt-0.5 font-display font-bold sm:hidden">{money(item.price)}</p>
       </div>
-      <span className="font-display text-lg font-bold">{money(item.price)}</span>
-      <button onClick={onEdit} className="btn-ghost h-10 w-10 p-0" aria-label={`Edit ${item.name}`}><Pencil className="h-4 w-4" /></button>
-      <button onClick={onDelete} className="btn-ghost h-10 w-10 p-0 text-chili" aria-label={`Delete ${item.name}`}><Trash2 className="h-4 w-4" /></button>
-    </li>
+      <span className="hidden font-display text-lg font-bold sm:block">{money(item.price)}</span>
+      <div className="flex shrink-0 gap-1.5 sm:gap-2">
+        <button onClick={onEdit} className="btn-ghost h-10 w-10 p-0" aria-label={`Edit ${item.name}`}><Pencil className="h-4 w-4" /></button>
+        <button onClick={onDelete} className="btn-ghost h-10 w-10 p-0 text-chili" aria-label={`Delete ${item.name}`}><Trash2 className="h-4 w-4" /></button>
+      </div>
+    </div>
   );
 }
 
@@ -109,7 +112,7 @@ export function MealsManager({ setError }) {
       {!form && <button className="btn-red" onClick={() => setForm(blankMeal())}><Plus className="h-4 w-4" /> Add meal</button>}
 
       {form && (
-        <form onSubmit={save} className="space-y-4 rounded-2xl border border-black/5 bg-white p-6">
+        <form onSubmit={save} className="space-y-4 rounded-2xl border border-black/5 bg-white p-4 sm:p-6">
           <h2 className="text-xl font-bold">{form.id ? 'Edit meal' : 'New meal'}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div><label className="label" htmlFor="m-name">Meal name</label><input id="m-name" required className="field" value={form.name} onChange={(e) => set('name', e.target.value)} placeholder="Jollof rice with chicken" /></div>
@@ -132,9 +135,11 @@ export function MealsManager({ setError }) {
         {list?.map((m) => {
           const date = String(m.available_date).slice(0, 10);
           return (
-            <Row key={m.id} item={m} onEdit={() => edit(m)} onDelete={() => remove(m)}
-              sub={date === today ? 'Today' : date}
-              badge={!m.is_available ? <Pill tone="bad">Hidden</Pill> : date === today ? <Pill>Live today</Pill> : null} />
+            <li key={m.id}>
+              <Row item={m} onEdit={() => edit(m)} onDelete={() => remove(m)}
+                sub={date === today ? 'Today' : date}
+                badge={!m.is_available ? <Pill tone="bad">Hidden</Pill> : date === today ? <Pill>Live today</Pill> : null} />
+            </li>
           );
         })}
       </ul>
@@ -193,7 +198,7 @@ export function ProductsManager({ setError }) {
       {!form && <button className="btn-green" onClick={() => setForm(blankProduct())}><Plus className="h-4 w-4" /> Add grocery item</button>}
 
       {form && (
-        <form onSubmit={save} className="space-y-4 rounded-2xl border border-black/5 bg-white p-6">
+        <form onSubmit={save} className="space-y-4 rounded-2xl border border-black/5 bg-white p-4 sm:p-6">
           <h2 className="text-xl font-bold">{form.id ? 'Edit item' : 'New grocery item'}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div><label className="label" htmlFor="p-name">Item name</label><input id="p-name" required className="field" value={form.name} onChange={(e) => set('name', e.target.value)} placeholder="Tomatoes" /></div>
@@ -224,16 +229,16 @@ export function ProductsManager({ setError }) {
         {list === null && <li className="p-6 text-black/50">Loading groceries...</li>}
         {list?.length === 0 && <li className="p-6 text-black/60">No grocery items yet. Add your first one above.</li>}
         {list?.map((p) => (
-          <div key={p.id}>
+          <li key={p.id}>
             <Row item={p} onEdit={() => edit(p)} onDelete={() => remove(p)}
               sub={[p.category_name, p.unit].filter(Boolean).join(' · ') || 'Uncategorised'}
               badge={!p.in_stock ? <Pill tone="bad">Out of stock</Pill> : null} />
-            <div className="-mt-2 px-4 pb-3 pl-[88px]">
-              <button onClick={() => toggleStock(p)} className="text-xs font-semibold text-leaf hover:underline">
+            <div className="-mt-1 pb-3 pl-[72px] pr-3 sm:-mt-2 sm:pl-[88px]">
+              <button onClick={() => toggleStock(p)} className="py-1 text-xs font-semibold text-leaf hover:underline">
                 Mark as {p.in_stock ? 'out of stock' : 'in stock'}
               </button>
             </div>
-          </div>
+          </li>
         ))}
       </ul>
     </div>

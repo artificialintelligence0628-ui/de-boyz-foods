@@ -10,7 +10,7 @@ const GIVE_UP_MS = 150000; // mobile money prompts expire after a couple of minu
 const DEFAULT_CODE_HELP = 'Dial *110# to generate a voucher code, then enter it below.'; // Telecel
 
 // Defined outside PayMomo so inputs keep focus while typing.
-const Card = ({ children }) => <div className="mx-auto max-w-md px-4 py-16 text-center">{children}</div>;
+const Card = ({ children }) => <div className="mx-auto max-w-md px-4 py-10 text-center sm:py-16">{children}</div>;
 
 export default function PayMomo() {
   const { orderNo } = useParams();
@@ -103,7 +103,7 @@ export default function PayMomo() {
   if (stage === 'paid') return (
     <Card>
       <CheckCircle2 className="mx-auto h-14 w-14 text-leaf" />
-      <h1 className="mt-5 text-3xl font-extrabold">Payment received</h1>
+      <h1 className="mt-5 text-2xl font-extrabold sm:text-3xl">Payment received</h1>
       <p className="mt-2 text-black/65">{amount} paid for order {orderNo}. Taking you to your order...</p>
       <Link to={`/order/${orderNo}`} className="btn-green mt-6">View order</Link>
     </Card>
@@ -112,8 +112,8 @@ export default function PayMomo() {
   if (stage === 'otp') return (
     <Card>
       <span className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-leaf-soft"><KeyRound className="h-9 w-9 text-leaf" /></span>
-      <h1 className="mt-6 text-3xl font-extrabold">Enter your voucher code</h1>
-      <p className="mt-2 text-lg text-black/70">{codeHelp}</p>
+      <h1 className="mt-6 text-2xl font-extrabold sm:text-3xl">Enter your voucher code</h1>
+      <p className="mt-2 text-base text-black/70 sm:text-lg">{codeHelp}</p>
       <form onSubmit={sendCode} className="mt-6 space-y-4 text-left">
         <div>
           <label className="label" htmlFor="vc">Voucher code</label>
@@ -128,8 +128,8 @@ export default function PayMomo() {
   if (stage === 'waiting') return (
     <Card>
       <span className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-leaf-soft"><Smartphone className="h-9 w-9 text-leaf" /></span>
-      <h1 className="mt-6 text-3xl font-extrabold">Check your phone</h1>
-      <p className="mt-2 text-lg text-black/70">Approve the payment of <strong>{amount}</strong> and enter your {label} PIN.</p>
+      <h1 className="mt-6 text-2xl font-extrabold sm:text-3xl">Check your phone</h1>
+      <p className="mt-2 text-base text-black/70 sm:text-lg">Approve the payment of <strong>{amount}</strong> and enter your {label} PIN.</p>
       <p className="mt-6 flex items-center justify-center gap-2 text-sm text-black/60"><Loader2 className="h-4 w-4 animate-spin" /> Waiting for your approval...</p>
       <p className="mx-auto mt-6 max-w-sm rounded-xl bg-black/[0.04] p-3 text-xs text-black/60">
         {network === 'mtn'
@@ -142,9 +142,9 @@ export default function PayMomo() {
   if (stage === 'failed' || stage === 'timeout') return (
     <Card>
       <XCircle className="mx-auto h-14 w-14 text-chili" />
-      <h1 className="mt-5 text-3xl font-extrabold">{stage === 'timeout' ? "We didn't get your approval" : "Payment didn't go through"}</h1>
+      <h1 className="mt-5 text-2xl font-extrabold sm:text-3xl">{stage === 'timeout' ? "We didn't get your approval" : "Payment didn't go through"}</h1>
       <p className="mt-2 text-black/65">{error || 'The prompt may have expired. Your order is saved, so you can try again.'}</p>
-      <div className="mt-6 flex justify-center gap-3">
+      <div className="mt-6 flex flex-wrap justify-center gap-3">
         <button className="btn-green" onClick={() => { setError(''); setStage('form'); }}>Try again</button>
         <Link to={`/order/${orderNo}`} className="btn-ghost">View order</Link>
       </div>
@@ -154,7 +154,7 @@ export default function PayMomo() {
   // stage === 'form'
   return (
     <Card>
-      <h1 className="text-3xl font-extrabold">Pay {amount}</h1>
+      <h1 className="text-2xl font-extrabold sm:text-3xl">Pay {amount}</h1>
       <p className="mt-2 text-black/65">Order {orderNo}. We'll send a prompt to your {label} number.</p>
       <form onSubmit={(e) => { e.preventDefault(); start(); }} className="mt-6 space-y-4 text-left">
         <div>

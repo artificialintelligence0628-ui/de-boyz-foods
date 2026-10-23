@@ -12,7 +12,7 @@ export default function ItemCard({ item, type, accent = 'green' }) {
 
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-black/5 bg-white transition hover:shadow-card">
-      <div className="aspect-square bg-[#F1F0EE]">
+      <div className="aspect-[4/3] bg-[#F1F0EE] sm:aspect-square">
         {item.image_url ? (
           <img src={item.image_url} alt={item.name} loading="lazy" className="h-full w-full object-cover" />
         ) : (
@@ -20,23 +20,23 @@ export default function ItemCard({ item, type, accent = 'green' }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-sans text-lg font-medium leading-snug">{item.name}</h3>
-        {item.unit && <p className="text-black/55">{item.unit}</p>}
-        {item.description && <p className="mt-3 text-black/65">{item.description}</p>}
+      <div className="flex flex-1 flex-col p-3 sm:p-5">
+        <h3 className="break-words font-sans text-base font-medium leading-snug sm:text-lg">{item.name}</h3>
+        {item.unit && <p className="text-sm text-black/55 sm:text-base">{item.unit}</p>}
+        {item.description && <p className="mt-2 line-clamp-2 text-sm text-black/65 sm:mt-3 sm:line-clamp-none sm:text-base">{item.description}</p>}
 
-        <div className="mt-auto flex items-center justify-between pt-5">
-          <span className="font-display text-2xl font-bold">{money(item.price)}</span>
+        <div className="mt-auto flex flex-col gap-3 pt-3 sm:flex-row sm:items-center sm:justify-between sm:pt-5">
+          <span className="font-display text-xl font-bold sm:text-2xl">{money(item.price)}</span>
           {soldOut ? (
             <span className="text-sm font-medium text-chili">Out of stock</span>
           ) : line ? (
-            <div className="flex items-center gap-2">
-              <button onClick={() => cart.setQty(entry, line.qty - 1)} className="btn-ghost h-10 w-10 p-0" aria-label={`Remove one ${item.name}`}><Minus className="h-4 w-4" /></button>
+            <div className="flex items-center justify-between gap-2 sm:justify-start">
+              <button onClick={() => cart.setQty(entry, line.qty - 1)} className="btn-ghost h-11 w-11 p-0 sm:h-10 sm:w-10" aria-label={`Remove one ${item.name}`}><Minus className="h-4 w-4" /></button>
               <span className="w-5 text-center font-semibold">{line.qty}</span>
-              <button onClick={() => cart.add(entry)} className={`${tone} h-10 w-10 p-0`} aria-label={`Add one ${item.name}`}><Plus className="h-4 w-4" /></button>
+              <button onClick={() => cart.add(entry)} className={`${tone} h-11 w-11 p-0 sm:h-10 sm:w-10`} aria-label={`Add one ${item.name}`}><Plus className="h-4 w-4" /></button>
             </div>
           ) : (
-            <button onClick={() => cart.add(entry)} className="inline-flex items-center gap-2 rounded-full bg-black/[0.05] px-5 py-2.5 font-semibold hover:bg-black/10">
+            <button onClick={() => cart.add(entry)} className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-black/[0.05] px-5 py-2.5 font-semibold hover:bg-black/10 active:bg-black/10 sm:w-auto">
               <Plus className="h-4 w-4" /> Add
             </button>
           )}

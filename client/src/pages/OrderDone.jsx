@@ -18,10 +18,10 @@ export default function OrderDone() {
   const unpaidOnline = order.payment_method === 'momo_now' && order.payment_status !== 'paid';
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-14 sm:px-6">
+    <div className="mx-auto max-w-xl px-4 py-8 sm:px-6 sm:py-14">
       <div className="text-center">
         <CheckCircle2 className="mx-auto h-12 w-12 text-leaf" />
-        <h1 className="mt-4 text-3xl font-extrabold">Order {order.order_no} placed</h1>
+        <h1 className="mt-4 text-2xl font-extrabold sm:text-3xl">Order {order.order_no} placed</h1>
         <p className="mt-2 text-black/60">Status: <strong>{LABEL[order.status]}</strong>. Save your order number to check back.</p>
       </div>
 
@@ -34,8 +34,8 @@ export default function OrderDone() {
 
       <ul className="mt-8 divide-y divide-black/5 rounded-2xl border border-black/5 bg-white">
         {order.items.map((i) => (
-          <li key={i.id} className="flex justify-between p-4 text-sm">
-            <span>{i.qty} &times; {i.name}</span><span className="font-semibold">{money(i.unit_price * i.qty)}</span>
+          <li key={i.id} className="flex justify-between gap-3 p-4 text-sm">
+            <span className="min-w-0 break-words">{i.qty} &times; {i.name}</span><span className="shrink-0 font-semibold">{money(i.unit_price * i.qty)}</span>
           </li>
         ))}
         <li className="flex justify-between p-4 text-sm text-black/60"><span>Delivery</span><span>{Number(order.delivery_fee) === 0 ? 'Free' : money(order.delivery_fee)}</span></li>

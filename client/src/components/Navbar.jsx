@@ -26,7 +26,7 @@ function ModeToggle({ className = '' }) {
   const { pathname } = useLocation();
   const foodOn = pathname.startsWith('/food');
   const groceriesOn = pathname.startsWith('/groceries') || pathname.startsWith('/cart');
-  const pill = 'rounded-full px-4 py-1.5 text-sm font-semibold transition';
+  const pill = 'flex-1 rounded-full px-4 py-1.5 text-center text-sm font-semibold transition sm:flex-none';
   return (
     <div className={`items-center gap-1 rounded-full border border-black/5 bg-black/[0.04] p-1 ${className}`}>
       <Link to="/groceries" className={`${pill} ${groceriesOn ? 'bg-leaf text-white' : 'text-black/60 hover:text-ink'}`}>Groceries</Link>
@@ -48,7 +48,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-black/5 bg-paper/95 backdrop-blur">
-      <div className="flex items-center gap-3 px-4 py-2 sm:gap-3 sm:px-6">
+      <div className="flex items-center gap-2 px-3 py-2 sm:gap-3 sm:px-6">
         <Logo />
         <ModeToggle className="hidden sm:flex" />
 
@@ -63,25 +63,26 @@ export default function Navbar() {
           />
         </form>
 
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex items-center gap-2 sm:gap-3">
           <span className="hidden max-w-[14rem] items-center gap-2 text-sm text-black/70 lg:flex">
             <MapPin className="h-5 w-5 shrink-0 text-leaf" /> <span className="truncate">Deliver to {AREA}</span>
           </span>
 
           {isAdmin && <Link to="/admin" className="btn-ghost hidden sm:inline-flex"><LayoutDashboard className="h-4 w-4" /> Admin</Link>}
+          {isAdmin && <Link to="/admin" className="btn-ghost h-10 w-10 p-0 sm:hidden" aria-label="Admin"><LayoutDashboard className="h-4 w-4" /></Link>}
           {user ? (
-            <button onClick={logout} className="btn-ghost px-3" aria-label="Sign out" title={`Signed in as ${user.name}`}><LogOut className="h-4 w-4" /></button>
+            <button onClick={logout} className="btn-ghost h-10 w-10 p-0 sm:h-auto sm:w-auto sm:px-3" aria-label="Sign out" title={`Signed in as ${user.name}`}><LogOut className="h-4 w-4" /></button>
           ) : (
-            <Link to="/login" className="btn-ghost px-3" aria-label="Sign in"><User className="h-4 w-4" /></Link>
+            <Link to="/login" className="btn-ghost h-10 w-10 p-0 sm:h-auto sm:w-auto sm:px-3" aria-label="Sign in"><User className="h-4 w-4" /></Link>
           )}
 
-          <Link to="/cart" className="inline-flex items-center gap-2 rounded-full bg-leaf px-4 py-2 font-display text-sm font-bold text-white hover:bg-leaf-dark" aria-label={`Cart, ${count} items`}>
+          <Link to="/cart" className="inline-flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-leaf px-3 font-display text-sm font-bold text-white hover:bg-leaf-dark sm:gap-2 sm:px-4" aria-label={`Cart, ${count} items`}>
             <ShoppingCart className="h-4 w-4" /> {money(subtotal)}
           </Link>
         </div>
       </div>
 
-      <div className="px-4 pb-3 sm:hidden"><ModeToggle className="flex w-fit" /></div>
+      <div className="px-3 pb-2 sm:hidden"><ModeToggle className="flex w-full" /></div>
     </header>
   );
 }

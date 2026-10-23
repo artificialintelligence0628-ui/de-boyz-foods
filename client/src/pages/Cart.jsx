@@ -72,13 +72,13 @@ export default function Cart() {
 
   if (!cart.items.length) {
     return (
-      <div className="mx-auto flex max-w-xl flex-col items-center px-4 pb-24 pt-24 text-center">
+      <div className="mx-auto flex max-w-xl flex-col items-center px-4 pb-16 pt-16 text-center sm:pb-24 sm:pt-24">
         <span className="grid h-24 w-24 place-items-center rounded-full bg-black/[0.05]">
           <ShoppingBag className="h-10 w-10 text-black/60" strokeWidth={1.5} />
         </span>
-        <h1 className="mt-8 text-4xl font-extrabold tracking-tight">Your cart is empty</h1>
-        <p className="mt-2 text-lg text-black/65">Browse groceries and add items to get started.</p>
-        <Link to="/groceries" className="mt-8 rounded-full bg-leaf px-9 py-4 font-display text-lg font-bold text-white hover:bg-leaf-dark">
+        <h1 className="mt-6 text-3xl font-extrabold tracking-tight sm:mt-8 sm:text-4xl">Your cart is empty</h1>
+        <p className="mt-2 text-base text-black/65 sm:text-lg">Browse groceries and add items to get started.</p>
+        <Link to="/groceries" className="mt-6 rounded-full bg-leaf px-8 py-3.5 font-display text-base font-bold sm:mt-8 sm:px-9 sm:py-4 sm:text-lg text-white hover:bg-leaf-dark">
           Shop Groceries
         </Link>
       </div>
@@ -94,29 +94,31 @@ export default function Cart() {
   );
 
   return (
-    <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1fr_380px]">
+    <div className="mx-auto grid max-w-6xl gap-6 px-3 py-6 sm:gap-8 sm:px-6 sm:py-10 lg:grid-cols-[1fr_380px]">
       <div>
-        <h1 className="text-4xl font-extrabold tracking-tight">Your cart</h1>
-        <ul className="mt-6 divide-y divide-black/5 rounded-2xl border border-black/5 bg-white">
+        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Your cart</h1>
+        <ul className="mt-4 divide-y divide-black/5 rounded-2xl border border-black/5 bg-white sm:mt-6">
           {cart.items.map((i) => (
-            <li key={`${i.type}-${i.id}`} className="flex items-center gap-4 p-4">
-              <div className="min-w-0 flex-1">
-                <p className="truncate font-bold">{i.name}</p>
+            <li key={`${i.type}-${i.id}`} className="grid grid-cols-[1fr_auto] items-start gap-x-3 gap-y-2 p-3 sm:flex sm:items-center sm:gap-4 sm:p-4">
+              <div className="min-w-0 sm:flex-1">
+                <p className="break-words font-bold leading-snug sm:truncate">{i.name}</p>
                 <p className="text-sm text-black/60">{money(i.price)}{i.unit ? ` · ${i.unit}` : ''}</p>
               </div>
-              <div className="flex items-center gap-2">
-                <button type="button" onClick={() => cart.setQty(i, i.qty - 1)} className="btn-ghost h-9 w-9 p-0" aria-label={`Remove one ${i.name}`}><Minus className="h-4 w-4" /></button>
-                <span className="w-6 text-center font-semibold">{i.qty}</span>
-                <button type="button" onClick={() => cart.add(i)} className="btn-ghost h-9 w-9 p-0" aria-label={`Add one ${i.name}`}><Plus className="h-4 w-4" /></button>
+              <button type="button" onClick={() => cart.remove(i)} className="grid h-9 w-9 place-items-center text-black/40 hover:text-chili sm:order-last sm:h-auto sm:w-auto" aria-label={`Remove ${i.name}`}><Trash2 className="h-4 w-4" /></button>
+              <div className="col-span-2 flex items-center justify-between gap-3 sm:contents">
+                <div className="flex items-center gap-2">
+                  <button type="button" onClick={() => cart.setQty(i, i.qty - 1)} className="btn-ghost h-10 w-10 p-0 sm:h-9 sm:w-9" aria-label={`Remove one ${i.name}`}><Minus className="h-4 w-4" /></button>
+                  <span className="w-6 text-center font-semibold">{i.qty}</span>
+                  <button type="button" onClick={() => cart.add(i)} className="btn-ghost h-10 w-10 p-0 sm:h-9 sm:w-9" aria-label={`Add one ${i.name}`}><Plus className="h-4 w-4" /></button>
+                </div>
+                <p className="text-right font-bold sm:w-20">{money(i.price * i.qty)}</p>
               </div>
-              <p className="w-20 text-right font-bold">{money(i.price * i.qty)}</p>
-              <button type="button" onClick={() => cart.remove(i)} className="text-black/40 hover:text-chili" aria-label={`Remove ${i.name}`}><Trash2 className="h-4 w-4" /></button>
             </li>
           ))}
         </ul>
       </div>
 
-      <form onSubmit={submit} className="h-fit space-y-4 rounded-2xl border border-black/5 bg-white p-6">
+      <form onSubmit={submit} className="h-fit space-y-4 rounded-2xl border border-black/5 bg-white p-4 sm:p-6">
         <h2 className="text-xl font-bold">Checkout</h2>
         <p className="text-sm text-black/60">No account needed.</p>
 

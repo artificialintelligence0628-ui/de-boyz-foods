@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { SlidersHorizontal, Check } from 'lucide-react';
+import { SlidersHorizontal, Check, Search } from 'lucide-react';
 import { api } from '../api.js';
 import ItemCard from '../components/ItemCard.jsx';
 
@@ -30,29 +30,48 @@ export default function Groceries() {
     setParams(next);
   };
   const chip = (active) =>
-    `rounded-full px-5 py-2 font-semibold transition ${active ? 'bg-leaf text-white' : 'border border-black/10 bg-white text-ink hover:bg-black/5'}`;
+    `shrink-0 whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-semibold transition sm:px-5 sm:py-2 sm:text-base ${active ? 'bg-leaf text-white' : 'border border-black/10 bg-white text-ink hover:bg-black/5'}`;
 
   return (
-    <div className="px-4 pb-12 pt-8 sm:px-6">
-      <h1 className="text-4xl font-extrabold tracking-tight">Groceries</h1>
-      <p className="mt-1 text-lg text-black/65">
+    <div className="px-3 pb-12 pt-6 sm:px-6 sm:pt-8">
+      <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Groceries</h1>
+      <p className="mt-1 text-base text-black/65 sm:text-lg">
         {q ? <>Results for &ldquo;{q}&rdquo;</> : 'Fresh produce and everyday essentials, delivered to you.'}
       </p>
 
-      <div className="mt-6 flex flex-wrap items-center gap-3">
-        <span className="flex items-center gap-2 font-semibold text-black/70"><SlidersHorizontal className="h-4 w-4" /> Categories</span>
-        <button className={chip(!category)} onClick={() => pick('')}>All</button>
-        {cats.map((c) => (
-          <button key={c.id} className={chip(String(c.id) === category)} onClick={() => pick(c.id)}>{c.name}</button>
-        ))}
+      {/* Search lives in the navbar on desktop; show it here on small screens. */}
+      <div className="relative mt-4 md:hidden">
+        <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-black/50" />
+        <input
+          value={q}
+          onChange={(e) => {
+            const next = new URLSearchParams(params);
+            e.target.value ? next.set('q', e.target.value) : next.delete('q');
+            setParams(next, { replace: true });
+          }}
+          placeholder="Search groceries..."
+          aria-label="Search groceries"
+          className="w-full rounded-full border border-black/10 bg-white py-3 pl-11 pr-4 outline-none focus:ring-2 focus:ring-leaf/30"
+        />
+      </div>
 
-        <label className="ml-auto flex cursor-pointer items-center gap-2 font-medium text-black/70">
+      <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-3 sm:mt-6">
+        <span className="flex items-center gap-2 text-sm font-semibold text-black/70 sm:text-base"><SlidersHorizontal className="h-4 w-4" /> Categories</span>
+
+        <label className="ml-auto flex cursor-pointer items-center gap-2 text-sm font-medium text-black/70 sm:order-last sm:text-base">
           <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="peer sr-only" />
           <span className="grid h-6 w-6 place-items-center rounded-md border border-black/25 bg-white text-white peer-checked:border-leaf peer-checked:bg-leaf peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-leaf">
             <Check className={`h-4 w-4 ${inStockOnly ? '' : 'opacity-0'}`} strokeWidth={3} />
           </span>
           In stock only
         </label>
+
+        <div className="-mx-3 flex w-[calc(100%+1.5rem)] gap-2 overflow-x-auto px-3 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:w-auto sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
+          <button className={chip(!category)} onClick={() => pick('')}>All</button>
+          {cats.map((c) => (
+            <button key={c.id} className={chip(String(c.id) === category)} onClick={() => pick(c.id)}>{c.name}</button>
+          ))}
+        </div>
       </div>
 
       <div className="mt-6">
@@ -64,7 +83,7 @@ export default function Groceries() {
             Nothing here yet. Try another category or search.
           </p>
         ) : (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {items.map((p) => <ItemCard key={p.id} item={p} type="product" />)}
           </div>
         )}
