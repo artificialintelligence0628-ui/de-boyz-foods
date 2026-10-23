@@ -47,7 +47,7 @@ export default function Home() {
         <p className="text-center text-sm font-bold uppercase tracking-[0.3em] text-leaf">
           Fresh groceries &amp; hot Ghanaian meals, ordered in minutes.
         </p>
-        <h1 className="mx-auto mt-6 max-w-4xl text-center text-5xl font-extrabold tracking-tight sm:text-7xl">
+        <h1 className="mt-6 whitespace-nowrap text-center text-2xl font-extrabold tracking-tight min-[400px]:text-3xl sm:text-5xl lg:text-6xl">
           What would you like today?
         </h1>
 
