@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api, money } from '../../api.js';
+import { MealsManager, ProductsManager } from './CatalogManager.jsx';
 
 const STATUSES = ['new', 'confirmed', 'preparing', 'out_for_delivery', 'completed', 'cancelled'];
 const PAY = { momo_now: 'Mobile money (pay now)', momo: 'MoMo on delivery', cash: 'Cash' };
@@ -74,11 +75,8 @@ export default function Dashboard() {
         </div>
       )}
 
-      {tab !== 'orders' && (
-        <p className="mt-6 rounded-2xl border border-dashed border-black/10 bg-white p-10 text-center text-black/60">
-          The {tab === 'meals' ? 'daily meal' : 'grocery'} manager is the next feature we'll build. The API routes and image upload endpoint are already in place.
-        </p>
-      )}
+      {tab === 'meals' && <MealsManager setError={setError} />}
+      {tab === 'products' && <ProductsManager setError={setError} />}
     </div>
   );
 }
