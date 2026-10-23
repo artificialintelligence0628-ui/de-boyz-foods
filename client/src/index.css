@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+  html { font-size: 15px; }
   body { @apply bg-paper font-sans text-ink antialiased; }
   h1, h2, h3 { @apply font-display; }
   :focus-visible { @apply outline-2 outline-offset-2 outline-leaf; outline-style: solid; }
