@@ -75,8 +75,8 @@ export default function Navbar() {
             <Link to="/login" className="btn-ghost px-3" aria-label="Sign in"><User className="h-4 w-4" /></Link>
           )}
 
-          <Link to="/cart" className="inline-flex items-center gap-2 rounded-full bg-leaf px-5 py-3 font-display text-lg font-bold text-white hover:bg-leaf-dark" aria-label={`Cart, ${count} items`}>
-            <ShoppingCart className="h-5 w-5" /> {money(subtotal)}
+          <Link to="/cart" className="inline-flex items-center gap-2 rounded-full bg-leaf px-4 py-2.5 font-display text-base font-bold text-white hover:bg-leaf-dark" aria-label={`Cart, ${count} items`}>
+            <ShoppingCart className="h-4 w-4" /> {money(subtotal)}
           </Link>
         </div>
       </div>
