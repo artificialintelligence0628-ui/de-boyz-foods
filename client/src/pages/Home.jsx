@@ -7,18 +7,18 @@ import ItemCard from '../components/ItemCard.jsx';
 function HeroCard({ tone, badge, BadgeIcon, title, text, cta, to, image }) {
   const green = tone === 'green';
   return (
-    <section className={`relative flex min-h-[22rem] flex-col justify-between overflow-hidden rounded-[2rem] p-8 text-white shadow-card ${green ? 'bg-leaf' : 'bg-chili'}`}>
+    <section className={`relative flex min-h-[16rem] flex-col justify-between overflow-hidden rounded-3xl p-6 text-white shadow-card ${green ? 'bg-leaf' : 'bg-chili'}`}>
       {/* Drop photos at client/public/images/groceries.jpg and food.jpg; the card still looks right without them. */}
       <img src={image} alt="" onError={(e) => (e.currentTarget.style.display = 'none')}
         className="absolute right-0 top-0 hidden h-[62%] w-[34%] object-cover sm:block" />
       <div className="relative max-w-[62%] sm:max-w-[60%]">
-        <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-sm font-semibold">
+        <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">
           <BadgeIcon className="h-4 w-4" /> {badge}
         </span>
-        <h2 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl">{title}</h2>
-        <p className="mt-3 text-lg leading-snug text-white/90">{text}</p>
+        <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">{title}</h2>
+        <p className="mt-2 text-base leading-snug text-white/90">{text}</p>
       </div>
-      <Link to={to} className={`relative mt-8 flex items-center justify-between gap-2 rounded-full bg-white px-8 py-4 text-lg font-bold ${green ? 'text-leaf' : 'text-chili'}`}>
+      <Link to={to} className={`relative mt-6 flex items-center justify-between gap-2 rounded-full bg-white px-6 py-2.5 text-base font-bold ${green ? 'text-leaf' : 'text-chili'}`}>
         <span className="flex items-center gap-3">{cta} <ArrowRight className="h-5 w-5" /></span>
       </Link>
     </section>
@@ -43,15 +43,15 @@ export default function Home() {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 pb-10 pt-12 sm:px-6">
-        <p className="text-center text-sm font-bold uppercase tracking-[0.3em] text-leaf">
+      <div className="mx-auto max-w-7xl px-4 pb-8 pt-8 sm:px-6">
+        <p className="text-center text-xs font-bold uppercase tracking-[0.25em] text-leaf">
           Fresh groceries &amp; hot Ghanaian meals, ordered in minutes.
         </p>
-        <h1 className="mt-6 whitespace-nowrap text-center text-2xl font-extrabold tracking-tight min-[400px]:text-3xl sm:text-5xl lg:text-6xl">
+        <h1 className="mt-4 text-center text-2xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
           What would you like today?
         </h1>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+        <div className="mt-8 grid gap-4 lg:grid-cols-2">
           <HeroCard tone="green" BadgeIcon={Leaf} badge="Fresh & everyday essentials" title="Buy Groceries"
             text="Shop for groceries and everyday essentials. Delivered to your door." cta="Shop Groceries" to="/groceries" image="/images/groceries.jpg" />
           <HeroCard tone="red" BadgeIcon={Flame} badge="Today's hot Ghanaian specials" title="Order Food"
@@ -61,7 +61,7 @@ export default function Home() {
 
       <section className="mx-auto max-w-7xl px-4 pb-12 sm:px-6">
         <div className="flex items-center justify-between">
-          <h2 className="flex items-center gap-3 text-3xl font-bold"><Flame className="h-7 w-7 text-chili" /> Today's Hot Meals</h2>
+          <h2 className="flex items-center gap-3 text-2xl font-bold"><Flame className="h-6 w-6 text-chili" /> Today's Hot Meals</h2>
           <Link to="/food" className="font-semibold text-leaf hover:underline">View menu &rsaquo;</Link>
         </div>
         <div className="mt-5">
